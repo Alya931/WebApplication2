@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@{
+    ViewData["Title"] = "CMS Page";
+    Layout = "~/Views/backend/layout.cshtml";
+
+}
+
+
+
+
+@using WebApplication2.Constants
+<h1>Blogs Management</h1>
+<br />
+@if ((AuthorizationService.AuthorizeAsync(User, Permissions.Blogs.Create)).Result.Succeeded)
+{
+    <button class="btn btn-success">Create</button>
+}
+@if ((AuthorizationService.AuthorizeAsync(User, Permissions.Blogs.View)).Result.Succeeded)
+{
+    <button class="btn btn-info">View</button>
+}
+@if ((AuthorizationService.AuthorizeAsync(User, Permissions.Blogs.Edit)).Result.Succeeded)
+{
+    <button class="btn btn-warning">Modify</button>
+}
+@if ((AuthorizationService.AuthorizeAsync(User, Permissions.Blogs.Delete)).Result.Succeeded)
+{
+    <button class="btn btn-danger">Delete</button>
+}

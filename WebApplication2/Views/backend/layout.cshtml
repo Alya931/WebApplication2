@@ -1,0 +1,250 @@
+﻿@using Microsoft.AspNetCore.Identity
+@*@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager*@
+@*@inject IAuthorizationService AuthorizationService*@
+@using WebApplication2.Constants
+
+@using WebApplication2.Models
+@*@using Microsoft.AspNetCore.Authorization*@
+
+
+@*@model IEnumerable<IdentityRole>*@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>AMAN CMS</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"] - CMS</title>
+    <link rel="stylesheet" href="~/backend/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/backend/css/site.css" />
+
+
+    <link rel="icon" href="~/backend/public/images/aman.png" type="image/icon type">
+    <link rel="stylesheet" type="text/css" href="~/backend/public/assets/datatables/datatables.css">
+    <!-- plugin css -->
+    <link media="all" type="text/css" rel="stylesheet" href="~/backend/public/assets/plugins/mdi/font/css/materialdesignicons.min.css">
+    <link media="all" type="text/css" rel="stylesheet" href="~/backend/public/assets/plugins/perfect-scrollbar/perfect-scrollbar.css">
+    <!-- end plugin css -->
+    <!-- common css -->
+    <link media="all" type="text/css" rel="stylesheet" href="~/backend/public/css/app.css">
+    <!-- end common css -->
+    <link href="~/backend/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <Link href="~/backend/css/StyleSheet.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="container-scroller" id="app">
+
+        <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center logo5">
+                <a class="navbar-brand brand-logo" href="#">
+                    <img src="~/backend/public/images/logoo.svg" alt="logo" />
+                </a>
+                <a class="navbar-brand brand-logo-mini" href="#">
+                    <img src="~/public/images/aman.png" alt="logo" />
+                </a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end amanheader" style="
+                 background: #b02431 !important;>
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+
+                <ul class="navbar-nav navbar-nav-right">
+
+                    <li class="nav-item dropdown d-none d-xl-inline-block">
+
+
+                        <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                            <span class="profile-text d-none d-md-inline-flex">  Hello @User.Identity.Name!  </span>
+                            <img class="img-xs rounded-circle" src="~/backend/public/images/profile.png" alt="Profile image">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+
+
+
+
+                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                            </form>
+
+                        </div>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="mdi mdi-menu icon-menu"></span>
+                </button>
+            </div>
+        </nav>
+
+        <div class="container-fluid page-body-wrapper">
+
+            <nav class="sidebar sidebar-offcanvas dynamic-active-class-disabled" id="sidebar">
+                <ul class="nav">
+                    @if (User.IsInRole("SuperAdmin"))
+                    {
+
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/">
+                                <i class="menu-icon mdi mdi-television"></i>
+                                <span class="menu-title">Dashboard</span>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("SuperAdmin"))
+                    {
+
+                        <li id="dvDetails" runat="server" class="nav-item  ">
+                            <a class="nav-link" data-toggle="collapse" href="#basic-ui" aria-expanded="#">
+                                <i class="menu-icon mdi mdi-account-search "></i>
+                                <span class="menu-title">Manage Users</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse " id="basic-ui">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item  ">
+                                        <a class="nav-link menu-icon" href="~/Users/Index">Users</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="nav-link menu-icon" href="~/Roles/Index">Roles</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="nav-link menu-icon" href="~/ShowPermission/Index">Permission</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="nav-link menu-icon" href="~/MangePermission/Index">Mange Permission and Roles</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                    }
+                    @if (User.IsInRole("SuperAdmin"))
+                    {
+                        <li class="nav-item ">
+                            <a class="nav-link" href="~/Services/Index">
+                                <i class="menu-icon mdi  mdi-gift"></i>
+                                <span class="menu-title">Services</span>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("SuperAdmin"))
+                    {
+                        <li class="nav-item ">
+                            <a class="nav-link" href="~/Project/index">
+                                <i class="menu-icon mdi   mdi-apps"></i>
+                                <span class="menu-title">Projects</span>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("SuperAdmin"))
+                    {
+                        <li class="nav-item ">
+                            <a class="nav-link" href="~/Product_/index">
+                                <i class="menu-icon mdi mdi-cart"></i>
+                                <span class="menu-title">Products</span>
+                            </a>
+                        </li>
+
+                    }
+                    @if (User.IsInRole("SuperAdmin"))
+                    {
+                        <li class="nav-item ">
+                            <a class="nav-link" href="~/Blogs/Index">
+                                <i class="menu-icon mdi mdi-file-outline"></i>
+                                <span class="menu-title">Blogs</span>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("SuperAdmin"))
+                    {
+                        <li class="nav-item ">
+                            <a class="nav-link" href="~/Jobs/Index">
+                                <i class="menu-icon mdi mdi-worker"></i>
+                                <span class="menu-title">Job Posts</span>
+                            </a>
+                        </li>
+
+
+
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    @if (User.IsInRole("SuperAdmin"))
+                    {
+                        <li class="nav-item ">
+                            <a class="nav-link" data-toggle="collapse" href="#basic-uio" aria-expanded="">
+                                <i class="menu-icon mdi mdi-wrench"></i>
+                                <span class="menu-title">Settings</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse " id="basic-uio">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item  ">
+                                        <a class="nav-link menu-icon " href="#">Services Cataogry</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="nav-link menu-icon " href="#"> Project Cataogry</a>
+                                    </li>
+
+                                    <li class="nav-item ">
+                                        <a class="nav-link menu-icon" href="#"> Products Cataogry</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="nav-link menu-icon" href="#"> Blogs Cataogry</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                    }
+                   
+
+                        <li class="nav-item ">
+
+
+                            <form class="nav-link" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <i class="menu-icon mdi mdi mdi-import"></i>
+
+                                <span><button type="submit" class="menu-title border-0">Logout</button></span>
+                            </form>
+                        </li>
+                    </ul>
+            </nav>
+
+
+
+
+            <div class="main-panel">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <footer>
+    </footer>
+    <script src="~/backend/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/backend/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/backend/js/site.js" asp-append-version="true"></script>
+    <script src="~/backend/js/sweetAlert.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

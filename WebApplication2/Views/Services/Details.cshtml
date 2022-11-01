@@ -1,0 +1,85 @@
+﻿@model WebApplication2.Models.Services
+@{
+    ViewData["Title"] = "CMS Page";
+    Layout = "~/Views/backend/layout.cshtml";
+
+}
+
+ 
+<div class="container">
+    <div class="justify-content-center">
+     
+        <div class="card">
+            <div class="card-header">
+                Service
+            
+                <span class="float-right">
+                    @*<a class="btn amanbt" href="Index">Back</a>*@
+                </span>
+              
+            </div>
+            <div class="card-body">
+
+
+                <strong>Title:</strong>
+                <div class="jumbotron py-3 ">
+                  @Model.title
+                </div>
+
+
+                <strong>Small Description:</strong>
+                <div class="jumbotron py-3">
+                    @Model.smallDesc
+                </div>
+
+                <strong>large Description:</strong>
+                <div class="jumbotron py-3">
+                    @Model.largDesc
+                </div>
+
+                <strong>Tag:</strong>
+                <div class="jumbotron py-3">
+                    @Model.tag
+                </div>
+
+                <strong>Category:</strong>
+                <div class="jumbotron py-3">
+
+                    @Model.Catogry
+                </div>
+
+                <strong>Video:</strong>
+                <div class="jumbotron py-3">
+                    @Model.link
+                </div>
+                <div class="row text-center">
+                    <div class="col-lg-6">
+
+                        <label>Image:</label>
+                        <div class="py-3 ">
+                            @Model.image
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+
+                        <strong>file:</strong>
+                        <div class="py-3 mt-4">
+                            @Model.file
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+ 

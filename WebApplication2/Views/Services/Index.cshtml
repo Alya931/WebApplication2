@@ -1,0 +1,148 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@{
+    ViewData["Title"] = "CMS Page";
+    Layout = "~/Views/backend/layout.cshtml";
+    var i = 0;
+
+}
+
+
+
+
+@using WebApplication2.Constants
+@model IEnumerable<WebApplication2.Models.Services>
+
+
+
+<div class="container">
+    <br />
+
+    <div style="width:auto; margin:0 auto;">
+        <div class="card-header">
+            Services
+            <span class="float-right">
+                <a class="btn amanbt" href="~/Services/create">New Service</a>
+            </span>
+        </div>
+        <div class="table-responsive">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>title</th>
+                      
+                        <th>Action</th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.title)
+                            </td>
+                            
+                            <td>
+
+                                @*@if ((AuthorizationService.AuthorizeAsync(User, Permissions.Services.Create)).Result.Succeeded)
+        {*@
+
+                                @*}*@
+
+                                @*@if ((AuthorizationService.AuthorizeAsync(User, Permissions.Services.View)).Result.Succeeded)
+        {*@
+                                <a asp-action="Details" class="btn btn-warning" asp-route-Id="@item.Id">Details</a>
+
+                                @*//}*@
+
+                                @*@if ((AuthorizationService.AuthorizeAsync(User, Permissions.Services.Edit)).Result.Succeeded)
+        {*@
+
+                                <a asp-action="Update" class="btn btn-warning" asp-route-Id="@item.Id">Modify</a>
+                                @*}*@
+                                @*@if ((AuthorizationService.AuthorizeAsync(User, Permissions.Services.Delete)).Result.Succeeded)
+        {*@
+                          
+
+
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal_@item.Id">
+                                   Delete
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal_@item.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Do you want to Delete @item.title?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <form asp-action="Delete" asp-route-Id=@item.Id>
+                                                    <input class="btn btn-primary" type="submit" value="Save" />
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                @*}*@
+
+
+
+
+
+
+                            </td>
+
+                        </tr>
+
+                    }
+                </thead>
+            </table>
+        </div>
+        </div>
+
+
+                </tbody>
+            </table>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+        @*@if ((AuthorizationService.AuthorizeAsync(User, Permissions.Services.Create)).Result.Succeeded)
+                    {
+                    <button class="btn btn-success">Create</button>
+                    }
+                    @if ((AuthorizationService.AuthorizeAsync(User, Permissions.Services.View)).Result.Succeeded)
+                    {
+                        <button class="btn btn-info">View</button>
+                    }
+                    @if ((AuthorizationService.AuthorizeAsync(User, Permissions.Services.Edit)).Result.Succeeded)
+                    {
+                        <button class="btn btn-warning">Modify</button>
+                    }
+                    @if ((AuthorizationService.AuthorizeAsync(User, Permissions.Services.Delete)).Result.Succeeded)
+                    {
+                        <button class="btn btn-danger">Delete</button>
+                    }*@
